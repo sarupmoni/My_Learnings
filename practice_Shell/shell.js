@@ -1,7 +1,7 @@
 let PS1 = "Jarvis ";
 const home = PS1;
-const files = [];
-const directories = [];
+let files = [];
+let directories = [];
 
 const getComment = function (comment) {
   const array = comment.split("/");
@@ -54,8 +54,24 @@ const notFound = function (command) {
   return ("jarvis: no such command found : " + command);
 }
 
+const removeDirectory = function (name){
+  const list = directories.flat();
+  const directory = name.join();
+  const index = list.indexOf(directory);
+  list.splice(index, 1);
+  directories = list;
+}
+
+const removeFile = function (name){
+  const list = files.flat();
+  const file = name.join();
+  const index = list.indexOf(file);
+  list.splice(index, 1);
+  files = list;
+}
+
 const externalCommand = function (command, arg) {
-  const list = [["ls", display], ["cd", cd], ["mkdir", createDirectories], ["touch", createFiles]];
+  const list = [["ls", display], ["cd", cd], ["mkdir", createDirectories], ["touch", createFiles], ["rmdir", removeDirectory], ["rm", removeFile]];
   const choice = list.filter(function (x) { return x[0] === command }).flat();
   if (choice.length !== 0) {
     return choice[1](arg);
