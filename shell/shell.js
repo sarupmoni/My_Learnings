@@ -1,34 +1,35 @@
 let PS1 = "Jarvis ";
-const home = PS1;
-let files = [];
-let directories = [];
+const files = [];
+const directories = [];
+let currentDirectory = ["~"];
+const home = currentDirectory;
 
-const getComment = function (comment) {
-  const array = comment.split("/");
-  array.pop();
-  if (array[0] === undefined) {
-    return comment;
+const getPreviousDirectory = function (currentDirectory) {
+  const array = currentDirectory.split("/");
+  if (currentDirectory.includes("/")) {
+    array.pop();
+    currentDirectory = array.join("/");
   }
-  return array.join("/");
+  return currentDirectory;
 }
 
-const getFiles = function (arg) {
-  const existingFiles = files.concat(directories).flat();
+const getDirectories = function (arg) {
   const target = arg.toString();
-  if (existingFiles.join("/").includes(target)) {
-    PS1 = PS1 + "/" + target;
+  if (directories.join("/").includes(target)) {
+    currentDirectory.push(target);
+    currentDirectory.join("/");
   } else {
-    return "no such files or directories found";
+    return "no such directories found";
   }
 }
 
 const cd = function (arg) {
   if (arg.length === 0 || arg[0] === "") {
-    PS1 = home;
+    currentDirectory = home;
   } else if (arg[0] === "..") {
-    PS1 = getComment(PS1);
+    currentDirectory = getPreviousDirectory(currentDirectory);
   } else {
-    return getFiles(arg);
+    return getDirectories(arg);
   }
 }
 
@@ -54,7 +55,7 @@ const notFound = function (command) {
   return ("jarvis: no such command found : " + command);
 }
 
-const removeDirectory = function (name){
+const removeDirectory = function (name) {
   const list = directories.flat();
   const directory = name.join();
   const index = list.indexOf(directory);
@@ -62,7 +63,7 @@ const removeDirectory = function (name){
   directories = list;
 }
 
-const removeFile = function (name){
+const removeFile = function (name) {
   const list = files.flat();
   const file = name.join();
   const index = list.indexOf(file);
@@ -87,14 +88,14 @@ const runCommand = function (command, arg) {
     case "echo":
       return arg.join(" ");
     case "pwd":
-      return PS1;
+      return currentDirectory.join("");
     default:
       return externalCommand(command, arg);
   }
 }
 
 while (true) {
-  const input = prompt(PS1 + " ~ %");
+  const input = prompt(PS1 + currentDirectory + " %");
   const [command, ...arg] = input.split(" ");
   const result = runCommand(command, arg);
   if (result !== undefined) {
