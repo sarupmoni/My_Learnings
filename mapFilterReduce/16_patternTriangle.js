@@ -1,3 +1,5 @@
+const STAR = "*";
+
 const range = function (from, to, step) {
   const numbers = [];
   for (let number = from; number < to; number += step) {
@@ -5,8 +7,16 @@ const range = function (from, to, step) {
   }
 
   return numbers;
+};
+
+const filledLine = function (times) {
+  return STAR.repeat(times);
+};
+
+const filledTriangle = function (height) {
+  return range(1, height, 1).map(function (height) {
+    return filledLine(height);
+  }).join("\n");
 }
 
-range(1, 5, 1).map(function () {
-  return 
-})
+console.log(filledTriangle(5));
