@@ -4,8 +4,9 @@ function* rangeGenerator(from, to, step) {
   }
 }
 
-const main = async () => {
+const main = () => {
   const gen = rangeGenerator(2, 10, 2);
+  // console.log([...gen]);
   for (let value of gen) {
     console.log(value);
   }
