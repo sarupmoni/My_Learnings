@@ -1,0 +1,19 @@
+{
+  "scriptId": "320",
+  "url": "file:///Users/sarupmoni/My_Learnings/test/demo.js",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 86, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "func",
+      "ranges": [
+        { "startOffset": 7, "endOffset": 85, "count": 2 },
+        { "startOffset": 45, "endOffset": 84, "count": 1 }
+      ],
+      "isBlockCoverage": true
+    }
+  ]
+}
